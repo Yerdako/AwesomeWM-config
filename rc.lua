@@ -48,7 +48,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "termite"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -311,17 +311,8 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () 
-    awful.util.spawn("dmenu_run") end,
-    		{description = "run dmenu", group = "launcher"}),
-
-    awful.key({ modkey },            "b",     function () 
-    awful.util.spawn("firefox") end,
-    		{description = "launch firefox", group = "applications"}),  
-
-    awful.key({ modkey },            "d",     function () 
-    awful.util.spawn("discord") end,
-    		{description = "launch discord", group = "applications"}),  
+    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+              {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -573,8 +564,8 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- Autostart Applications
-awful.spawn.with_shell("xrandr --output HDMI-0 --mode 1920x1080 --rate 120.00")
+awful.spawn.with_shell("xrandr --output HDMI-1 --mode 1920x1080 --rate 120.00")
+awful.spawn.with_shell("xinput --set-prop 9 'libinput Accel Profile Enabled' 0, 1")
 awful.spawn.with_shell("nitrogen --restore")
-awful.spawn.with_shell("xinput set-prop 13 'libinput Accel Profile Enabled' 0 1")
-awful.spawn.with_shell("flameshot")
-awful.spawn.with_shell("compton")
+
+beautiful.useless_gap = 1
